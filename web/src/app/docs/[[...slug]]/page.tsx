@@ -46,10 +46,31 @@ export default async function DocPage(props: PageProps) {
 
     if (!doc) {
         // Debug info on 404
+        const cwd = process.cwd();
+        let files: string[] = [];
+        try {
+            files = await fs.readdir(cwd);
+        } catch (e) { }
+
+        const contentDirInfo = await import('@/lib/path-utils').then(m => m.getContentDir()).catch(() => 'Failed to load');
+
         return (
             <div className="p-8">
                 <h1 className="text-2xl font-bold text-rose-600">404 - Document Not Found</h1>
                 <p className="mt-4">Could not load document.</p>
+
+                <div className="mt-8 p-4 bg-slate-100 rounded text-xs font-mono whitespace-pre-wrap">
+                    <p className="font-bold text-slate-700">Debug Info:</p>
+                    <p>Current Path: {JSON.stringify(params.slug)}</p>
+                    <p>CWD: {cwd}</p>
+                    <p>Resolved Content Dir: {JSON.stringify(contentDirInfo)}</p>
+                    <p>Files in CWD: {files.join(', ')}</p>
+
+                    {/* Try to list 'content' folder if it exists */}
+                    <p>Files in ./content: {
+                        await fs.readdir(path.join(cwd, 'content')).catch(e => e.message)
+                    }</p>
+                </div>
             </div>
         );
     }
