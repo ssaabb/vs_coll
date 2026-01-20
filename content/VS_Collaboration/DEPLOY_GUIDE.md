@@ -31,8 +31,11 @@ git add .
 # 3. 초기 커밋
 git commit -m "feat: initial commit not deploy ready"
 
-# 4. GitHub 저장소와 연결 (URL은 본인의 리포지토리 주소로 변경)
-git remote add origin https://github.com/YOUR_ID/Git-CMS.git
+# 4. GitHub 저장소와 연결
+git remote add origin https://github.com/ssaabb/vs_coll.git
+
+> **팁:** 만약 `error: remote origin already exists` 에러가 뜬다면, 아래 명령어로 덮어쓰세요:
+> `git remote set-url origin https://github.com/ssaabb/vs_coll.git`
 
 # 5. 메인 브랜치 설정 및 푸시
 git branch -M main

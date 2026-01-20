@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation';
 import { MDXRemote } from 'next-mdx-remote/rsc';
 import matter from 'gray-matter';
 import { DocEditor } from '@/components/DocEditor';
+import { getContentDir } from '@/lib/path-utils';
 
 // Next.js 15+: params is a Promise
 interface PageProps {

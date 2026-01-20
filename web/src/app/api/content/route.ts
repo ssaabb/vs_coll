@@ -3,12 +3,10 @@ import { gitService } from '@/lib/git';
 import fs from 'fs/promises';
 import path from 'path';
 import matter from 'gray-matter';
+import { getContentDir } from '@/lib/path-utils';
 
 // Force dynamic since we read file system
 export const dynamic = 'force-dynamic';
-
-const ROOT_DIR = path.resolve(process.cwd(), '..');
-const CONTENT_DIR = path.join(ROOT_DIR, 'content');
 
 export async function GET(req: NextRequest) {
     const searchParams = req.nextUrl.searchParams;
@@ -24,6 +22,7 @@ export async function GET(req: NextRequest) {
     }
 
     try {
+        const CONTENT_DIR = await getContentDir();
         const fullPath = path.join(CONTENT_DIR, filePath);
         const fileContent = await fs.readFile(fullPath, 'utf-8');
         const { data, content } = matter(fileContent);
